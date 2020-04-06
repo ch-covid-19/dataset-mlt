@@ -16,8 +16,8 @@ jobs:
           daily_export_json_token: ""
       - name: Commit changes
         run: |
-          git config --local user.email "covidselfreportmlt@gmail.com"
-          git config --local user.name "Covid Self Report Malta Bot"
+          git config --local user.email "${{ secrets.DATASET_GITHUB_EMAIL }}"
+          git config --local user.name "${{ secrets.DATASET_GITHUB_NAME }}"
           git add .
           git commit -m "Performed automatic datasets generation"
       - name: Push changes
