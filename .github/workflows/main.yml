@@ -1,0 +1,26 @@
+on:
+  schedule:
+    - cron: "0 * * * *" # runs the aggregation every hour
+
+jobs:
+  aggregate:
+    runs-on: ubuntu-latest
+    name: Automatic datasets generation
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: aggregation
+        uses: ch-covid-19/data-github-action@master
+        with:
+          daily_export_json_url: ""
+          daily_export_json_token: ""
+      - name: Commit changes
+        run: |
+          git config --local user.email "covidselfreportmlt@gmail.com"
+          git config --local user.name "Covid Self Report Malta Bot"
+          git add .
+          git commit -m "Performed automatic datasets generation"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
